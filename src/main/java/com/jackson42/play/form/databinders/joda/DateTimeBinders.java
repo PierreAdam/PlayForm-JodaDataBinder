@@ -46,15 +46,15 @@ public class DateTimeBinders {
         /**
          * Parse the text from a form to a Joda {@code DateTime} using the internal pattern.
          *
-         * @see DateTime
          * @param text   The literal date
          * @param locale The current locale
          * @return Null if there is no text. The DateTime otherwise
          * @throws ParseException Parse error
+         * @see DateTime
          */
         @Override
         public DateTime parse(String text, Locale locale) throws ParseException {
-            if (text == null || text.trim().isEmpty()) {
+            if (text == null || text.trim().isEmpty() || text.compareToIgnoreCase("null") == 0) {
                 return null;
             }
             DateTimeFormatter dateTimeFormatter = DateTimeFormat.forPattern(this.pattern);
@@ -91,16 +91,16 @@ public class DateTimeBinders {
          * Parse the text from a form to a Joda {@code DateTime} using the play
          * {@code Formats.DateTime} annotation in order to obtain the correct format.
          *
-         * @see DateTime
          * @param annotation The annotation
          * @param text       The literal date
          * @param locale     The current locale
          * @return Null if there is no text. The DateTime otherwise
          * @throws ParseException Parse error
+         * @see DateTime
          */
         @Override
         public DateTime parse(Formats.DateTime annotation, String text, Locale locale) throws ParseException {
-            if (text == null || text.trim().isEmpty()) {
+            if (text == null || text.trim().isEmpty() || text.compareToIgnoreCase("null") == 0) {
                 return null;
             }
             DateTimeFormatter dateTimeFormatter = DateTimeFormat.forPattern(annotation.pattern());

@@ -1,0 +1,23 @@
+package com.jackson42.play.form.databinders;
+
+import com.jackson42.play.form.databinders.joda.DateTimeBinders;
+import org.joda.time.DateTime;
+import play.data.format.Formatters;
+
+import javax.inject.Inject;
+
+/**
+ * JodaDataModule.
+ *
+ * @author Thibault Meyer
+ * @version 16.05.16
+ * @since 16.05.16
+ */
+public class JodaDataModule {
+
+    @Inject
+    public JodaDataModule(final Formatters formatters) {
+        formatters.register(DateTime.class, new DateTimeBinders.DateTimeSimpleFormatter("yyyy-MM-dd"));
+        formatters.register(DateTime.class, new DateTimeBinders.DateTimeAnnotationFormatter());
+    }
+}

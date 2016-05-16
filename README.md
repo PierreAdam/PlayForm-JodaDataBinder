@@ -18,7 +18,7 @@ $> mvn package
 Add the following line on your ```application.conf```
 
 ```
-play.modules.enabled += "com.jackson42.play.form.databinders.JodaDataBinders"
+play.modules.enabled += "com.jackson42.play.form.databinders.JodaDataBinder"
 ```
 
 

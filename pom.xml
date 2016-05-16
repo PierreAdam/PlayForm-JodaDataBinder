@@ -1,16 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.jackson42</groupId>
     <artifactId>playform-jodadatabinders</artifactId>
-    <version>16.01</version>
+    <version>16.05</version>
     <packaging>jar</packaging>
     <name>PlayForm-JodaDataBinders</name>
     <description>A play 2 module which allows to use joda types on the forms</description>
-
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -98,15 +97,10 @@
 
     <dependencies>
         <dependency>
-            <groupId>com.google.inject</groupId>
-            <artifactId>guice</artifactId>
-            <version>4.0</version>
-        </dependency>
-        <dependency>
             <groupId>com.typesafe.play</groupId>
             <artifactId>play-java_2.11</artifactId>
-            <version>2.4.6</version>
+            <version>2.5.3</version>
+            <optional>true</optional>
         </dependency>
     </dependencies>
-
 </project>
