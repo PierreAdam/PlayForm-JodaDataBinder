@@ -5,6 +5,7 @@ import org.joda.time.DateTime;
 import play.data.format.Formatters;
 
 import javax.inject.Inject;
+import javax.inject.Singleton;
 
 /**
  * JodaDataModule.
@@ -13,6 +14,7 @@ import javax.inject.Inject;
  * @version 16.05.16
  * @since 16.05.16
  */
+@Singleton
 public class JodaDataModule {
 
     @Inject
