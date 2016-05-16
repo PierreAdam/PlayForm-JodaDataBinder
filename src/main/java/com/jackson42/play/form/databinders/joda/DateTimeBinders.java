@@ -13,8 +13,9 @@ import java.util.Locale;
  * DateTimeBinders.
  *
  * @author Pierre Adam
- * @version 16.01
- * @since 16.01
+ * @author Thibault Meyer
+ * @version 16.05.16
+ * @since 16.01.31
  */
 public class DateTimeBinders {
 
@@ -22,15 +23,15 @@ public class DateTimeBinders {
      * DateTimeSimpleFormatter.
      *
      * @author Pierre Adam
-     * @version 16.01
-     * @since 16.01
+     * @version 16.01.31
+     * @since 16.01.31
      */
     public static class DateTimeSimpleFormatter extends Formatters.SimpleFormatter<DateTime> {
 
         /**
          * The pattern to use when parsing or printing the joda datetime.
          *
-         * @since 16.01
+         * @since 16.01.31
          */
         private final String pattern;
 
@@ -38,6 +39,7 @@ public class DateTimeBinders {
          * Simple constructor.
          *
          * @param pattern The pattern to use
+         * @since 16.01.31
          */
         public DateTimeSimpleFormatter(String pattern) {
             this.pattern = pattern;
@@ -51,6 +53,7 @@ public class DateTimeBinders {
          * @return Null if there is no text. The DateTime otherwise
          * @throws ParseException Parse error
          * @see DateTime
+         * @since 16.01.31
          */
         @Override
         public DateTime parse(String text, Locale locale) throws ParseException {
@@ -68,6 +71,7 @@ public class DateTimeBinders {
          * @param value  The DateTime
          * @param locale The current locale
          * @return An empty string if the DateTime is null. The Correctly formatted string otherwise
+         * @since 16.01.31
          */
         @Override
         public String print(DateTime value, Locale locale) {
@@ -82,8 +86,8 @@ public class DateTimeBinders {
      * DateTimeAnnotationFormatter.
      *
      * @author Pierre Adam
-     * @version 16.01
-     * @since 16.01
+     * @version 16.01.31
+     * @since 16.01.31
      */
     public static class DateTimeAnnotationFormatter extends Formatters.AnnotationFormatter<Formats.DateTime, DateTime> {
 
@@ -97,6 +101,7 @@ public class DateTimeBinders {
          * @return Null if there is no text. The DateTime otherwise
          * @throws ParseException Parse error
          * @see DateTime
+         * @since 16.01.31
          */
         @Override
         public DateTime parse(Formats.DateTime annotation, String text, Locale locale) throws ParseException {
@@ -116,6 +121,7 @@ public class DateTimeBinders {
          * @param value      The DateTime
          * @param locale     The current locale
          * @return An empty string if the DateTime is null. The Correctly formatted string otherwise
+         * @since 16.01.31
          */
         @Override
         public String print(Formats.DateTime annotation, DateTime value, Locale locale) {

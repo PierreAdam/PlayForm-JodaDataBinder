@@ -17,6 +17,12 @@ import javax.inject.Singleton;
 @Singleton
 public class JodaDataModule {
 
+    /**
+     * Build an instance.
+     *
+     * @param formatters The Play Formatters instance
+     * @since 16.05.016
+     */
     @Inject
     public JodaDataModule(final Formatters formatters) {
         formatters.register(DateTime.class, new DateTimeBinders.DateTimeSimpleFormatter("yyyy-MM-dd"));
