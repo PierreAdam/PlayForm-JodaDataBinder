@@ -1,4 +1,4 @@
-import com.jackson42.play.form.databinders.joda.DateTimeBinders;
+import com.jackson42.play.form.databinders.joda.formatter.DateTimeSimpleFormatter;
 import org.joda.time.DateTime;
 import org.joda.time.IllegalFieldValueException;
 import org.junit.Assert;
@@ -14,17 +14,14 @@ import java.util.Locale;
  * @version 16.05.18
  * @since 16.05.18
  */
-public class DateTimeTest {
+public class SimpleFormatterTest {
 
-    private static final DateTimeBinders.DateTimeSimpleFormatter simpleFormatter;
-    private static final DateTimeBinders.DateTimeSimpleFormatter simpleFormatterLongFormat;
-    private static final DateTimeBinders.DateTimeAnnotationFormatter annotedFormatter;
-
+    private static final DateTimeSimpleFormatter simpleFormatter;
+    private static final DateTimeSimpleFormatter simpleFormatterLongFormat;
 
     static {
-        simpleFormatter = new DateTimeBinders.DateTimeSimpleFormatter("yyyy-MM-dd");
-        simpleFormatterLongFormat = new DateTimeBinders.DateTimeSimpleFormatter("yyyy-MM-dd'T'HH:mm:ss");
-        annotedFormatter = new DateTimeBinders.DateTimeAnnotationFormatter();
+        simpleFormatter = new DateTimeSimpleFormatter("yyyy-MM-dd");
+        simpleFormatterLongFormat = new DateTimeSimpleFormatter("yyyy-MM-dd'T'HH:mm:ss");
     }
 
     /**
