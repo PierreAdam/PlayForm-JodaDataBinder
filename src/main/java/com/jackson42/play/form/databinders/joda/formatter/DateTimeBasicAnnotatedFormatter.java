@@ -1,8 +1,30 @@
+/*
+ * The MIT License (MIT)
+ *
+ * Copyright (c) 2013 - 2018 PayinTech
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ */
+
 package com.jackson42.play.form.databinders.joda.formatter;
 
 import org.joda.time.DateTime;
-import org.joda.time.format.DateTimeFormat;
-import org.joda.time.format.DateTimeFormatter;
 import play.data.format.Formats;
 import play.data.format.Formatters;
 
@@ -16,7 +38,7 @@ import java.util.Locale;
  * @version 17.02.07
  * @since 16.01.31
  */
-public class DateTimeBasicAnnotatedFormatter extends Formatters.AnnotationFormatter<Formats.DateTime, DateTime> {
+public class DateTimeBasicAnnotatedFormatter extends Formatters.AnnotationFormatter<Formats.DateTime, DateTime> implements DateTimeParser {
 
     /**
      * Parse the text from a form to a Joda {@code DateTime} using the play
@@ -32,12 +54,7 @@ public class DateTimeBasicAnnotatedFormatter extends Formatters.AnnotationFormat
      */
     @Override
     public DateTime parse(final Formats.DateTime annotation, final String text, final Locale locale) throws ParseException {
-        if (text == null || text.trim().isEmpty() || text.compareToIgnoreCase("null") == 0) {
-            return null;
-        }
-        final DateTimeFormatter dateTimeFormatter = DateTimeFormat.forPattern(annotation.pattern());
-        dateTimeFormatter.withLocale(locale);
-        return dateTimeFormatter.parseDateTime(text);
+        return this.parse(annotation.pattern(), text, locale);
     }
 
     /**
@@ -52,9 +69,6 @@ public class DateTimeBasicAnnotatedFormatter extends Formatters.AnnotationFormat
      */
     @Override
     public String print(final Formats.DateTime annotation, final DateTime value, final Locale locale) {
-        if (value == null) {
-            return "";
-        }
-        return value.toString(annotation.pattern(), locale);
+        return this.print(annotation.pattern(), value, locale);
     }
 }

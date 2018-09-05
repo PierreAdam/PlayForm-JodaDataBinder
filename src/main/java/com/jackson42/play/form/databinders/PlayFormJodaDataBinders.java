@@ -22,42 +22,36 @@
  * SOFTWARE.
  */
 
-package com.jackson42.play.form.databinders.joda.annotation;
+package com.jackson42.play.form.databinders;
 
-import play.data.Form;
+import com.jackson42.play.form.databinders.joda.formatter.*;
+import org.joda.time.DateTime;
+import play.data.format.Formatters;
 
-import java.lang.annotation.Retention;
-import java.lang.annotation.Target;
-import java.text.SimpleDateFormat;
-
-import static java.lang.annotation.ElementType.FIELD;
-import static java.lang.annotation.RetentionPolicy.RUNTIME;
+import javax.inject.Inject;
+import javax.inject.Singleton;
 
 /**
- * JodaFormat.
+ * PlayFormJodaDataBinders.
  *
  * @author Pierre Adam
- * @version 17.02.07
- * @since 17.02.03
+ * @since 18.08.08
  */
-@Target({FIELD})
-@Retention(RUNTIME)
-@Form.Display(name = "format.date", attributes = {"patterns"})
-public @interface JodaDateTimeFormat {
+@Singleton
+public class PlayFormJodaDataBinders {
 
     /**
-     * Date pattern, as specified for {@link SimpleDateFormat}.
-     * When importing the patterns are tried sequentially.
-     * When exporting, the first pattern is used.
+     * Build an instance.
      *
-     * @return the list date pattern
+     * @param formatters The Play Formatters instance
+     * @since 18.08.08
      */
-    String patterns()[] default {};
-
-    /**
-     * Explicit definition of the pattern use to print.
-     *
-     * @return the pattern use to print
-     */
-    String printPattern() default "";
+    @Inject
+    public PlayFormJodaDataBinders(final Formatters formatters) {
+        formatters.register(DateTime.class, new DateTimeSimpleFormatter("yyyy-MM-dd"));
+        formatters.register(DateTime.class, new DateTimeBasicAnnotatedFormatter());
+        formatters.register(DateTime.class, new DateTimeExtendedAnnotatedFormatter());
+        formatters.register(DateTime.class, new DateTimeISO8601DateTimeFormatter());
+        formatters.register(DateTime.class, new DateTimeISO8601TimeFormatter());
+    }
 }

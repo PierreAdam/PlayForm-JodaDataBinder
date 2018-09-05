@@ -22,42 +22,24 @@
  * SOFTWARE.
  */
 
-package com.jackson42.play.form.databinders.joda.annotation;
+package com.jackson42.play.form.databinders;
 
-import play.data.Form;
-
-import java.lang.annotation.Retention;
-import java.lang.annotation.Target;
-import java.text.SimpleDateFormat;
-
-import static java.lang.annotation.ElementType.FIELD;
-import static java.lang.annotation.RetentionPolicy.RUNTIME;
+import play.api.Configuration;
+import play.api.Environment;
+import play.api.inject.Binding;
+import play.api.inject.Module;
+import scala.collection.Seq;
 
 /**
- * JodaFormat.
+ * PlayFormJodaDataModule.
  *
  * @author Pierre Adam
- * @version 17.02.07
- * @since 17.02.03
+ * @since 18.08.08
  */
-@Target({FIELD})
-@Retention(RUNTIME)
-@Form.Display(name = "format.date", attributes = {"patterns"})
-public @interface JodaDateTimeFormat {
+public class PlayFormJodaDataModule extends Module {
 
-    /**
-     * Date pattern, as specified for {@link SimpleDateFormat}.
-     * When importing the patterns are tried sequentially.
-     * When exporting, the first pattern is used.
-     *
-     * @return the list date pattern
-     */
-    String patterns()[] default {};
-
-    /**
-     * Explicit definition of the pattern use to print.
-     *
-     * @return the pattern use to print
-     */
-    String printPattern() default "";
+    @Override
+    public Seq<Binding<?>> bindings(Environment environment, Configuration configuration) {
+        return seq(bind(PlayFormJodaDataBinders.class).to(PlayFormJodaDataBinders.class));
+    }
 }

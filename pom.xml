@@ -6,7 +6,7 @@
 
     <groupId>com.jackson42</groupId>
     <artifactId>playform-jodadatabinders</artifactId>
-    <version>16.05</version>
+    <version>18.09</version>
     <packaging>jar</packaging>
     <name>PlayForm-JodaDataBinders</name>
     <description>A play 2 module which allows to use joda types on the forms</description>
@@ -98,9 +98,14 @@
     <dependencies>
         <dependency>
             <groupId>com.typesafe.play</groupId>
-            <artifactId>play-java_2.11</artifactId>
-            <version>2.5.3</version>
+            <artifactId>play-java_2.12</artifactId>
+            <version>2.6.17</version>
             <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>com.typesafe.play</groupId>
+            <artifactId>play-java-forms_2.12</artifactId>
+            <version>2.6.17</version>
         </dependency>
         <dependency>
             <groupId>junit</groupId>

@@ -28,36 +28,54 @@ import play.data.Form;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
-import java.text.SimpleDateFormat;
 
 import static java.lang.annotation.ElementType.FIELD;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 /**
- * JodaFormat.
+ * JodaISO8601TimeFormat will automatically accept the following format compliant with the ISO8601 :
+ *
+ * <table>
+ *     <tr>
+ *         <th>Format</th>
+ *         <th>Example</th>
+ *         <th>Comment</th>
+ *     </tr>
+ *     <tr>
+ *         <td>'T'HH:mm:ss'Z'</td>
+ *         <td>T20:45:30Z</td>
+ *         <td>The hour, minute and seconds in UTC</td>
+ *     </tr>
+ *     <tr>
+ *         <td>'T'HH:mm:ssZZ</td>
+ *         <td>T22:45:30+02:00</td>
+ *         <td>The hour, minute and seconds at the given timezone</td>
+ *     </tr>
+ *     <tr>
+ *         <td>'T'HH:mm:ss.SSS'Z'</td>
+ *         <td>T20:45:30.995Z</td>
+ *         <td>The hour, minute, seconds and milliseconds in UTC</td>
+ *     </tr>
+ *     <tr>
+ *         <td>'T'HH:mm:ss.SSSZZ</td>
+ *         <td>T22:45:30.995+02:00</td>
+ *         <td>The hour, minute, seconds and milliseconds at the given timezone</td>
+ *     </tr>
+ * </table>
  *
  * @author Pierre Adam
- * @version 17.02.07
- * @since 17.02.03
+ * @version 18.08.08
+ * @since 18.08.08
  */
 @Target({FIELD})
 @Retention(RUNTIME)
 @Form.Display(name = "format.date", attributes = {"patterns"})
-public @interface JodaDateTimeFormat {
-
-    /**
-     * Date pattern, as specified for {@link SimpleDateFormat}.
-     * When importing the patterns are tried sequentially.
-     * When exporting, the first pattern is used.
-     *
-     * @return the list date pattern
-     */
-    String patterns()[] default {};
+public @interface JodaISO8601TimeFormat {
 
     /**
      * Explicit definition of the pattern use to print.
      *
      * @return the pattern use to print
      */
-    String printPattern() default "";
+    String printPattern() default "'T'HH:mm:ss'Z'";
 }

@@ -22,42 +22,35 @@
  * SOFTWARE.
  */
 
-package com.jackson42.play.form.databinders.joda.annotation;
+package com.jackson42.play.form.databinders.joda.formatter;
 
-import play.data.Form;
+import com.jackson42.play.form.databinders.joda.annotation.JodaISO8601TimeFormat;
+import org.joda.time.DateTime;
+import play.data.format.Formatters;
 
-import java.lang.annotation.Retention;
-import java.lang.annotation.Target;
-import java.text.SimpleDateFormat;
-
-import static java.lang.annotation.ElementType.FIELD;
-import static java.lang.annotation.RetentionPolicy.RUNTIME;
+import java.text.ParseException;
+import java.util.Locale;
 
 /**
- * JodaFormat.
+ * DateTimeISO8601TimeFormatter.
  *
  * @author Pierre Adam
- * @version 17.02.07
- * @since 17.02.03
+ * @since 18.09.05
  */
-@Target({FIELD})
-@Retention(RUNTIME)
-@Form.Display(name = "format.date", attributes = {"patterns"})
-public @interface JodaDateTimeFormat {
+public class DateTimeISO8601TimeFormatter extends Formatters.AnnotationFormatter<JodaISO8601TimeFormat, DateTime> implements DateTimeParser {
 
     /**
-     * Date pattern, as specified for {@link SimpleDateFormat}.
-     * When importing the patterns are tried sequentially.
-     * When exporting, the first pattern is used.
-     *
-     * @return the list date pattern
+     * The Patterns.
      */
-    String patterns()[] default {};
+    private static final String[] patterns = {"'T'HH:mm:ssZZ", "'T'HH:mm:ss.SSSZZ"};
 
-    /**
-     * Explicit definition of the pattern use to print.
-     *
-     * @return the pattern use to print
-     */
-    String printPattern() default "";
+    @Override
+    public DateTime parse(final JodaISO8601TimeFormat annotation, final String text, final Locale locale) throws ParseException {
+        return this.parse(DateTimeISO8601TimeFormatter.patterns, text, locale);
+    }
+
+    @Override
+    public String print(final JodaISO8601TimeFormat annotation, final DateTime value, final Locale locale) {
+        return this.print(annotation.printPattern(), DateTimeISO8601TimeFormatter.patterns, value, locale);
+    }
 }
