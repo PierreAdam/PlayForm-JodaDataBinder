@@ -34,39 +34,7 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 /**
  * JodaISO8601DateTimeFormat will automatically accept the following format compliant with the ISO8601 :
- *
- * <table>
- *     <tr>
- *         <th>Format</th>
- *         <th>Example</th>
- *         <th>Comment</th>
- *     </tr>
- *     <tr>
- *         <td>YYYY-MM-dd</td>
- *         <td>1985-01-20</td>
- *         <td>The year, the month and the day</td>
- *     </tr>
- *     <tr>
- *         <td>yyyy-MM-dd'T'HH:mm:ss'Z'</td>
- *         <td>1985-01-20T20:45:30Z</td>
- *         <td>The full date in UTC</td>
- *     </tr>
- *     <tr>
- *         <td>yyyy-MM-dd'T'HH:mm:ssZZ</td>
- *         <td>1985-01-20T22:45:30+02:00</td>
- *         <td>The full date at the given timezone</td>
- *     </tr>
- *     <tr>
- *         <td>yyyy-MM-dd'T'HH:mm:ss.SSS'Z'</td>
- *         <td>1985-01-20T20:45:30.995Z</td>
- *         <td>The full date with the milliseconds in UTC</td>
- *     </tr>
- *     <tr>
- *         <td>yyyy-MM-dd'T'HH:mm:ss.SSSZZ</td>
- *         <td>1985-01-20T22:45:30.995+02:00</td>
- *         <td>The full date with the milliseconds at the given timezone</td>
- *     </tr>
- * </table>
+ * "YYYY-MM-dd", "yyyy-MM-dd'T'HH:mm:ssZZ", "yyyy-MM-dd'T'HH:mm:ss.SSSZZ"
  *
  * @author Pierre Adam
  * @version 18.08.08
