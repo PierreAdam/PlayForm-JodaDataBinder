@@ -16,7 +16,14 @@ $> mvn package
 
 ## How to use the module
 
-You can simply add the module to your ```build.sbt``` file and that's it ! The module will be automatically registered. 
+In your ```build.sbt``` file, you need to add a resolver to jitpack and the dependency for the module. This translate to the following lines.
+
+```sbtshell
+resolvers += "jitpack" at "https://jitpack.io"
+
+libraryDependencies += "com.github.payintech" % "play-remote-configuration" % "release~18.09"
+```
+
 
 ### DateTime
 
