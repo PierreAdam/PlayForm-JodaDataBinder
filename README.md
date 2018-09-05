@@ -33,6 +33,8 @@ All the dates and times are retrieved are in UTC whichever was the timezone used
 
 ```java
 import com.jackson42.play.form.databinders.joda.annotation.JodaDateTimeFormat;
+import com.jackson42.play.form.databinders.joda.annotation.JodaISO8601TimeFormat;
+import com.jackson42.play.form.databinders.joda.annotation.JodaISO8601DateTimeFormat;
 import org.joda.time.DateTime;
 import play.data.format.Formats;
 
@@ -68,7 +70,7 @@ public class MyForm {
 
 ### ISO-8601 annotations
 
-If you want to build an API or simply a route that take some free arguments from the user, you can use the annotions ```JodaISO8601DateTimeFormat``` or ```JodaISO8601TimeFormat```. These annotations allow a flexible format from the user. Not all ISO-8601 format will work but the most common / most reasonable ones are available.
+If you want to build an API or simply a route that takes some free arguments from the user, you can use the annotions ```JodaISO8601DateTimeFormat``` or ```JodaISO8601TimeFormat```. These annotations allow a flexible format from the user. Not all ISO-8601 format will work but the most common / most reasonable ones are available.
 
 ##### @JodaISO8601DateTimeFormat
 
