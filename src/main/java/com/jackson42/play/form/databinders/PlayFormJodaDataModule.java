@@ -40,6 +40,6 @@ public class PlayFormJodaDataModule extends Module {
 
     @Override
     public Seq<Binding<?>> bindings(Environment environment, Configuration configuration) {
-        return seq(bind(PlayFormJodaDataBinders.class).to(PlayFormJodaDataBinders.class));
+        return seq(bind(PlayFormJodaDataBinders.class).toSelf());
     }
 }
