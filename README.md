@@ -1,6 +1,6 @@
 # PlayForm-JodaDataBinder
 
-[![Build](https://img.shields.io/travis-ci/PierreAdam/PlayForm-JodaDataBinder.svg?branch=master&style=flat)](https://travis-ci.org/PierreAdam/PlayForm-JodaDataBinder)
+[![Build](https://api.travis-ci.org/PierreAdam/PlayForm-JodaDataBinder.svg?branch=master)](https://travis-ci.org/PierreAdam/PlayForm-JodaDataBinder)
 [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/PierreAdam/PlayForm-JodaDataBinder/master/LICENSE)
 
 PlayForm-JodaDataBinder is a module for Play Framework 2.x which allows you to use Joda DateTime object inside your form to retrieve the Date or Time !
