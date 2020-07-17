@@ -24,11 +24,7 @@
 
 package com.jackson42.play.form.databinders;
 
-import play.api.Configuration;
-import play.api.Environment;
-import play.api.inject.Binding;
-import play.api.inject.Module;
-import scala.collection.Seq;
+import com.google.inject.AbstractModule;
 
 /**
  * PlayFormJodaDataModule.
@@ -36,10 +32,10 @@ import scala.collection.Seq;
  * @author Pierre Adam
  * @since 18.08.08
  */
-public class PlayFormJodaDataModule extends Module {
+public class PlayFormJodaDataModule extends AbstractModule {
 
     @Override
-    public Seq<Binding<?>> bindings(Environment environment, Configuration configuration) {
-        return seq(bind(PlayFormJodaDataBinders.class).toSelf());
+    protected void configure() {
+        this.bind(PlayFormJodaDataBinders.class).asEagerSingleton();
     }
 }
