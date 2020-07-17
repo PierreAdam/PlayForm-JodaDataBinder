@@ -21,7 +21,7 @@ In your ```build.sbt``` file, you need to add a resolver to jitpack and the depe
 ```sbtshell
 resolvers += "jitpack" at "https://jitpack.io"
 
-libraryDependencies += "com.github.payintech" % "play-remote-configuration" % "release~18.09"
+libraryDependencies += "com.github.PierreAdam" % "PlayForm-JodaDataBinder" % "release~20.06"
 ```
 
 
