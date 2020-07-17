@@ -34,7 +34,7 @@ Alternatively you can use ```JodaISO8601DateTimeFormat``` or ```JodaISO8601TimeF
 
 #### Important to notice !
 
-All the dates and times are retrieved are in UTC whichever was the timezone used as an input.
+All the dates and times are retrieved in UTC. If the timezone was explicit in the input, the dates and time will be converted to UTC.
 
 ##### Example
 
