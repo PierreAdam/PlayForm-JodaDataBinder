@@ -26,7 +26,7 @@ package com.jackson42.play.form.databinders.joda.formatter;
 
 import com.jackson42.play.form.databinders.joda.annotation.JodaISO8601TimeFormat;
 import org.joda.time.DateTime;
-import play.data.format.Formatters;
+import org.joda.time.DateTimeZone;
 
 import java.text.ParseException;
 import java.util.Locale;
@@ -37,20 +37,30 @@ import java.util.Locale;
  * @author Pierre Adam
  * @since 18.09.05
  */
-public class DateTimeISO8601TimeFormatter extends Formatters.AnnotationFormatter<JodaISO8601TimeFormat, DateTime> implements DateTimeParser {
+public class DateTimeISO8601TimeFormatter extends DateTimeWithAnnotation<JodaISO8601TimeFormat> {
 
     /**
      * The Patterns.
      */
     private static final String[] patterns = {"'T'HH:mm:ssZZ", "'T'HH:mm:ss.SSSZZ"};
 
+    /**
+     * Instantiates a new Date time with annotation.
+     *
+     * @param inputTimeZone  the input time zone
+     * @param outputTimeZone the output time zone
+     */
+    public DateTimeISO8601TimeFormatter(final DateTimeZone inputTimeZone, final DateTimeZone outputTimeZone) {
+        super(inputTimeZone, outputTimeZone);
+    }
+
     @Override
     public DateTime parse(final JodaISO8601TimeFormat annotation, final String text, final Locale locale) throws ParseException {
-        return this.parse(DateTimeISO8601TimeFormatter.patterns, text, locale);
+        return this.parse(DateTimeISO8601TimeFormatter.patterns, text, locale, this.inputTimeZone);
     }
 
     @Override
     public String print(final JodaISO8601TimeFormat annotation, final DateTime value, final Locale locale) {
-        return this.print(annotation.printPattern(), DateTimeISO8601TimeFormatter.patterns, value, locale);
+        return this.print(annotation.printPattern(), DateTimeISO8601TimeFormatter.patterns, value, locale, this.outputTimeZone);
     }
 }

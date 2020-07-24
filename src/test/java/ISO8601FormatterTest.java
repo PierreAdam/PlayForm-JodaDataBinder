@@ -27,6 +27,7 @@ import com.jackson42.play.form.databinders.joda.annotation.JodaISO8601TimeFormat
 import com.jackson42.play.form.databinders.joda.formatter.DateTimeISO8601DateTimeFormatter;
 import com.jackson42.play.form.databinders.joda.formatter.DateTimeISO8601TimeFormatter;
 import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
@@ -54,8 +55,8 @@ public class ISO8601FormatterTest {
     private static final DateTimeISO8601TimeFormatter timeFormatter;
 
     static {
-        dateTimeFormatter = new DateTimeISO8601DateTimeFormatter();
-        timeFormatter = new DateTimeISO8601TimeFormatter();
+        dateTimeFormatter = new DateTimeISO8601DateTimeFormatter(DateTimeZone.UTC, null);
+        timeFormatter = new DateTimeISO8601TimeFormatter(DateTimeZone.UTC, null);
     }
 
     /**
@@ -67,12 +68,12 @@ public class ISO8601FormatterTest {
     public void T01_ValidDateTime() throws ParseException, NoSuchFieldException {
         final JodaISO8601DateTimeFormat annotation = ISO8601FormatterTest.AnnotationTest.class.getField("dateTime").getAnnotation(JodaISO8601DateTimeFormat.class);
 
-        final DateTime date1 = dateTimeFormatter.parse(annotation, "1985-01-20", Locale.FRANCE);
+        final DateTime date1 = ISO8601FormatterTest.dateTimeFormatter.parse(annotation, "1985-01-20", Locale.FRANCE);
         Assert.assertEquals(1985, date1.getYear());
         Assert.assertEquals(1, date1.getMonthOfYear());
         Assert.assertEquals(20, date1.getDayOfMonth());
 
-        final DateTime date2 = dateTimeFormatter.parse(annotation, "1985-01-20T20:45:30Z", Locale.FRANCE);
+        final DateTime date2 = ISO8601FormatterTest.dateTimeFormatter.parse(annotation, "1985-01-20T20:45:30Z", Locale.FRANCE);
         Assert.assertEquals(1985, date2.getYear());
         Assert.assertEquals(1, date2.getMonthOfYear());
         Assert.assertEquals(20, date2.getDayOfMonth());
@@ -80,7 +81,7 @@ public class ISO8601FormatterTest {
         Assert.assertEquals(45, date2.getMinuteOfHour());
         Assert.assertEquals(30, date2.getSecondOfMinute());
 
-        final DateTime date3 = dateTimeFormatter.parse(annotation, "1985-01-20T22:45:30+02:00", Locale.FRANCE);
+        final DateTime date3 = ISO8601FormatterTest.dateTimeFormatter.parse(annotation, "1985-01-20T22:45:30+02:00", Locale.FRANCE);
         Assert.assertEquals(1985, date3.getYear());
         Assert.assertEquals(1, date3.getMonthOfYear());
         Assert.assertEquals(20, date3.getDayOfMonth());
@@ -88,7 +89,7 @@ public class ISO8601FormatterTest {
         Assert.assertEquals(45, date3.getMinuteOfHour());
         Assert.assertEquals(30, date3.getSecondOfMinute());
 
-        final DateTime date4 = dateTimeFormatter.parse(annotation, "1985-01-20T20:45:30.420Z", Locale.FRANCE);
+        final DateTime date4 = ISO8601FormatterTest.dateTimeFormatter.parse(annotation, "1985-01-20T20:45:30.420Z", Locale.FRANCE);
         Assert.assertEquals(1985, date4.getYear());
         Assert.assertEquals(1, date4.getMonthOfYear());
         Assert.assertEquals(20, date4.getDayOfMonth());
@@ -97,7 +98,7 @@ public class ISO8601FormatterTest {
         Assert.assertEquals(30, date4.getSecondOfMinute());
         Assert.assertEquals(420, date4.getMillisOfSecond());
 
-        final DateTime date5 = dateTimeFormatter.parse(annotation, "1985-01-21T01:45:30.420+05:00", Locale.FRANCE);
+        final DateTime date5 = ISO8601FormatterTest.dateTimeFormatter.parse(annotation, "1985-01-21T01:45:30.420+05:00", Locale.FRANCE);
         Assert.assertEquals(1985, date5.getYear());
         Assert.assertEquals(1, date5.getMonthOfYear());
         Assert.assertEquals(20, date5.getDayOfMonth());
@@ -116,24 +117,24 @@ public class ISO8601FormatterTest {
     public void T02_ValidTime() throws ParseException, NoSuchFieldException {
         final JodaISO8601TimeFormat annotation = ISO8601FormatterTest.AnnotationTest.class.getField("time").getAnnotation(JodaISO8601TimeFormat.class);
 
-        final DateTime time1 = timeFormatter.parse(annotation, "T20:45:30Z", Locale.FRANCE);
+        final DateTime time1 = ISO8601FormatterTest.timeFormatter.parse(annotation, "T20:45:30Z", Locale.FRANCE);
         Assert.assertEquals(20, time1.getHourOfDay());
         Assert.assertEquals(45, time1.getMinuteOfHour());
         Assert.assertEquals(30, time1.getSecondOfMinute());
 
 
-        final DateTime time2 = timeFormatter.parse(annotation, "T20:45:30-10:00", Locale.FRANCE);
+        final DateTime time2 = ISO8601FormatterTest.timeFormatter.parse(annotation, "T20:45:30-10:00", Locale.FRANCE);
         Assert.assertEquals(6, time2.getHourOfDay());
         Assert.assertEquals(45, time2.getMinuteOfHour());
         Assert.assertEquals(30, time2.getSecondOfMinute());
 
-        final DateTime time3 = timeFormatter.parse(annotation, "T20:45:30.420Z", Locale.FRANCE);
+        final DateTime time3 = ISO8601FormatterTest.timeFormatter.parse(annotation, "T20:45:30.420Z", Locale.FRANCE);
         Assert.assertEquals(20, time3.getHourOfDay());
         Assert.assertEquals(45, time3.getMinuteOfHour());
         Assert.assertEquals(30, time3.getSecondOfMinute());
         Assert.assertEquals(420, time3.getMillisOfSecond());
 
-        final DateTime time4 = timeFormatter.parse(annotation, "T01:45:30.420+05:00", Locale.FRANCE);
+        final DateTime time4 = ISO8601FormatterTest.timeFormatter.parse(annotation, "T01:45:30.420+05:00", Locale.FRANCE);
         Assert.assertEquals(20, time4.getHourOfDay());
         Assert.assertEquals(45, time4.getMinuteOfHour());
         Assert.assertEquals(30, time4.getSecondOfMinute());

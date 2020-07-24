@@ -45,8 +45,8 @@ public class SimpleFormatterTest {
     private static final DateTimeSimpleFormatter simpleFormatterLongFormat;
 
     static {
-        simpleFormatter = new DateTimeSimpleFormatter("yyyy-MM-dd");
-        simpleFormatterLongFormat = new DateTimeSimpleFormatter("yyyy-MM-dd'T'HH:mm:ss");
+        simpleFormatter = new DateTimeSimpleFormatter("yyyy-MM-dd", DateTimeZone.UTC, null);
+        simpleFormatterLongFormat = new DateTimeSimpleFormatter("yyyy-MM-dd'T'HH:mm:ss", DateTimeZone.UTC, null);
     }
 
     /**
@@ -58,7 +58,7 @@ public class SimpleFormatterTest {
     public void T01_ValidDate() throws ParseException {
         final String value = "2016-03-10";
         final DateTime realValue = DateTime.parse(value).withZoneRetainFields(DateTimeZone.UTC);
-        final DateTime dateTime = simpleFormatter.parse(value, Locale.FRANCE);
+        final DateTime dateTime = SimpleFormatterTest.simpleFormatter.parse(value, Locale.FRANCE);
 
         Assert.assertNotNull(dateTime);
         Assert.assertEquals(realValue, dateTime);
@@ -71,7 +71,7 @@ public class SimpleFormatterTest {
      */
     @Test(expected = ParseException.class)
     public void T02_InvalidDate() throws ParseException {
-        simpleFormatter.parse("2016-13-10", Locale.FRANCE);
+        SimpleFormatterTest.simpleFormatter.parse("2016-13-10", Locale.FRANCE);
     }
 
     /**
@@ -81,7 +81,7 @@ public class SimpleFormatterTest {
      */
     @Test(expected = ParseException.class)
     public void T03_InvalidDate() throws ParseException {
-        simpleFormatter.parse("qwerty", Locale.FRANCE);
+        SimpleFormatterTest.simpleFormatter.parse("qwerty", Locale.FRANCE);
     }
 
     /**
@@ -92,7 +92,7 @@ public class SimpleFormatterTest {
     @Test
     public void T04_ValidDateLongFormat() throws ParseException {
         final DateTime realValue = DateTime.now();
-        final DateTime dateTime = simpleFormatterLongFormat.parse(realValue.toString("yyyy-MM-dd'T'HH:mm:ss"), Locale.FRANCE);
+        final DateTime dateTime = SimpleFormatterTest.simpleFormatterLongFormat.parse(realValue.toString("yyyy-MM-dd'T'HH:mm:ss"), Locale.FRANCE);
 
         Assert.assertNotNull(dateTime);
         Assert.assertEquals(realValue.withMillisOfSecond(0).withZoneRetainFields(DateTimeZone.UTC), dateTime);
@@ -105,6 +105,6 @@ public class SimpleFormatterTest {
      */
     @Test(expected = ParseException.class)
     public void T04_InvalidDateLongFormat() throws ParseException {
-        simpleFormatterLongFormat.parse("2016-03-10T01:02:60", Locale.FRANCE);
+        SimpleFormatterTest.simpleFormatterLongFormat.parse("2016-03-10T01:02:60", Locale.FRANCE);
     }
 }

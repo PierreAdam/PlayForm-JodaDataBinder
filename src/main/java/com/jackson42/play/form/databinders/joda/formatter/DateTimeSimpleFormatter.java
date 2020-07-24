@@ -25,6 +25,7 @@
 package com.jackson42.play.form.databinders.joda.formatter;
 
 import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
 import play.data.format.Formatters;
 
 import java.text.ParseException;
@@ -47,13 +48,27 @@ public class DateTimeSimpleFormatter extends Formatters.SimpleFormatter<DateTime
     private final String pattern;
 
     /**
+     * The time zone used for the inputs.
+     */
+    private final DateTimeZone inputTimeZone;
+
+    /**
+     * The time zone used for the outputs.
+     */
+    private final DateTimeZone outputTimeZone;
+
+    /**
      * Simple constructor.
      *
-     * @param pattern The pattern to use
+     * @param pattern        The pattern to use
+     * @param inputTimeZone  the input time zone
+     * @param outputTimeZone the output time zone
      * @since 16.01.31
      */
-    public DateTimeSimpleFormatter(final String pattern) {
+    public DateTimeSimpleFormatter(final String pattern, final DateTimeZone inputTimeZone, final DateTimeZone outputTimeZone) {
         this.pattern = pattern;
+        this.inputTimeZone = inputTimeZone;
+        this.outputTimeZone = outputTimeZone;
     }
 
     /**
@@ -68,7 +83,7 @@ public class DateTimeSimpleFormatter extends Formatters.SimpleFormatter<DateTime
      */
     @Override
     public DateTime parse(final String text, final Locale locale) throws ParseException {
-        return this.parse(this.pattern, text, locale);
+        return this.parse(this.pattern, text, locale, this.inputTimeZone);
     }
 
     /**
@@ -81,6 +96,6 @@ public class DateTimeSimpleFormatter extends Formatters.SimpleFormatter<DateTime
      */
     @Override
     public String print(final DateTime value, final Locale locale) {
-        return this.print(this.pattern, value, locale);
+        return this.print(this.pattern, value, locale, this.outputTimeZone);
     }
 }

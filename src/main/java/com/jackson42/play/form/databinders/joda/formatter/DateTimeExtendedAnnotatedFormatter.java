@@ -26,7 +26,7 @@ package com.jackson42.play.form.databinders.joda.formatter;
 
 import com.jackson42.play.form.databinders.joda.annotation.JodaDateTimeFormat;
 import org.joda.time.DateTime;
-import play.data.format.Formatters;
+import org.joda.time.DateTimeZone;
 
 import java.text.ParseException;
 import java.util.Locale;
@@ -38,7 +38,17 @@ import java.util.Locale;
  * @version 17.02.07
  * @since 16.01.31
  */
-public class DateTimeExtendedAnnotatedFormatter extends Formatters.AnnotationFormatter<JodaDateTimeFormat, DateTime> implements DateTimeParser {
+public class DateTimeExtendedAnnotatedFormatter extends DateTimeWithAnnotation<JodaDateTimeFormat> {
+
+    /**
+     * Instantiates a new Date time with annotation.
+     *
+     * @param inputTimeZone  the input time zone
+     * @param outputTimeZone the output time zone
+     */
+    public DateTimeExtendedAnnotatedFormatter(final DateTimeZone inputTimeZone, final DateTimeZone outputTimeZone) {
+        super(inputTimeZone, outputTimeZone);
+    }
 
     /**
      * Parse the text from a form to a Joda {@code DateTime} using the play
@@ -54,7 +64,7 @@ public class DateTimeExtendedAnnotatedFormatter extends Formatters.AnnotationFor
      */
     @Override
     public DateTime parse(final JodaDateTimeFormat annotation, final String text, final Locale locale) throws ParseException {
-        return this.parse(annotation.patterns(), text, locale);
+        return this.parse(annotation.patterns(), text, locale, this.inputTimeZone);
     }
 
     /**
@@ -69,6 +79,6 @@ public class DateTimeExtendedAnnotatedFormatter extends Formatters.AnnotationFor
      */
     @Override
     public String print(final JodaDateTimeFormat annotation, final DateTime value, final Locale locale) {
-        return this.print(annotation.printPattern(), annotation.patterns(), value, locale);
+        return this.print(annotation.printPattern(), annotation.patterns(), value, locale, this.outputTimeZone);
     }
 }

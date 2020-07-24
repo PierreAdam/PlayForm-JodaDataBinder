@@ -21,7 +21,26 @@ In your ```build.sbt``` file, you need to add a resolver to jitpack and the depe
 ```sbtshell
 resolvers += "jitpack" at "https://jitpack.io"
 
-libraryDependencies += "com.github.PierreAdam" % "PlayForm-JodaDataBinder" % "release~20.07u2"
+libraryDependencies += "com.github.PierreAdam" % "PlayForm-JodaDataBinder" % "release~20.08"
+```
+
+### Configuration
+
+By default, nothing is required in the play file application.conf. But you can however customize the behavior of the plugin using the following configuration.
+
+```
+playForm {
+  jodaDataBinder {
+    # All the parsed DateTime will be converted to the timezone bellow.
+    # Can accept "UTC" or a standard timezone representation like "Europe/Paris"
+    inputTimezone = "UTC"
+
+    # All the outputed DateTime will be converted to this timezone before being displayed.
+    # If the value "LOCAL" is used, the DateTime WILL NOT BE CONVERTED FOR DISPLAY !
+    # Can accept LOCAL disabling the feature, "UTC" or a standard timezone representation like "Europe/Paris"
+    outputTimezone = "LOCAL"
+  }
+}
 ```
 
 
@@ -34,7 +53,8 @@ Alternatively you can use ```JodaISO8601DateTimeFormat``` or ```JodaISO8601TimeF
 
 #### Important to notice !
 
-All the dates and times are retrieved in UTC. If the timezone was explicit in the input, the dates and time will be converted to UTC.
+All the dates and times are by default retrieved in UTC. If the timezone was explicit in the input, the dates and time will be converted to UTC.
+Take a look at the tests to better understand the behavior of Joda and this plugin.
 
 ##### Example
 

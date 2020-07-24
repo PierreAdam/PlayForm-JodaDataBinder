@@ -25,7 +25,9 @@
 package com.jackson42.play.form.databinders;
 
 import com.jackson42.play.form.databinders.joda.formatter.*;
+import com.typesafe.config.Config;
 import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
 import play.data.format.Formatters;
 
 import javax.inject.Inject;
@@ -47,11 +49,17 @@ public class PlayFormJodaDataBinders {
      * @since 18.08.08
      */
     @Inject
-    public PlayFormJodaDataBinders(final Formatters formatters) {
-        formatters.register(DateTime.class, new DateTimeSimpleFormatter("yyyy-MM-dd"));
-        formatters.register(DateTime.class, new DateTimeBasicAnnotatedFormatter());
-        formatters.register(DateTime.class, new DateTimeExtendedAnnotatedFormatter());
-        formatters.register(DateTime.class, new DateTimeISO8601DateTimeFormatter());
-        formatters.register(DateTime.class, new DateTimeISO8601TimeFormatter());
+    public PlayFormJodaDataBinders(final Config config, final Formatters formatters) {
+        final String sitz = config.getString("playForm.jodaDataBinder.inputTimezone");
+        final DateTimeZone itz = DateTimeZone.forID(sitz);
+
+        final String sotz = config.getString("playForm.jodaDataBinder.outputTimezone");
+        final DateTimeZone otz = "LOCAL".equals(sotz.toUpperCase()) ? null : DateTimeZone.forID(sotz);
+
+        formatters.register(DateTime.class, new DateTimeSimpleFormatter("yyyy-MM-dd", itz, otz));
+        formatters.register(DateTime.class, new DateTimeBasicAnnotatedFormatter(itz, otz));
+        formatters.register(DateTime.class, new DateTimeExtendedAnnotatedFormatter(itz, otz));
+        formatters.register(DateTime.class, new DateTimeISO8601DateTimeFormatter(itz, otz));
+        formatters.register(DateTime.class, new DateTimeISO8601TimeFormatter(itz, otz));
     }
 }

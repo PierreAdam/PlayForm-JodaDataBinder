@@ -25,6 +25,7 @@
 import com.jackson42.play.form.databinders.joda.annotation.JodaDateTimeFormat;
 import com.jackson42.play.form.databinders.joda.formatter.DateTimeExtendedAnnotatedFormatter;
 import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
@@ -47,7 +48,7 @@ public class ExtendedAnnotatedFormatterTest {
     private static final DateTimeExtendedAnnotatedFormatter formatter;
 
     static {
-        formatter = new DateTimeExtendedAnnotatedFormatter();
+        formatter = new DateTimeExtendedAnnotatedFormatter(DateTimeZone.UTC, null);
     }
 
     /**
@@ -61,12 +62,12 @@ public class ExtendedAnnotatedFormatterTest {
     public void T01_SinglePatternParse() throws ParseException, NoSuchFieldException {
         final JodaDateTimeFormat annotation = AnnotationTest.class.getField("single").getAnnotation(JodaDateTimeFormat.class);
 
-        final DateTime date = formatter.parse(annotation, "2015-03-05", Locale.FRANCE);
+        final DateTime date = ExtendedAnnotatedFormatterTest.formatter.parse(annotation, "2015-03-05", Locale.FRANCE);
         Assert.assertEquals(2015, date.getYear());
         Assert.assertEquals(3, date.getMonthOfYear());
         Assert.assertEquals(5, date.getDayOfMonth());
 
-        final DateTime date2 = formatter.parse(annotation, "2016-12-08", Locale.FRANCE);
+        final DateTime date2 = ExtendedAnnotatedFormatterTest.formatter.parse(annotation, "2016-12-08", Locale.FRANCE);
         Assert.assertEquals(2016, date2.getYear());
         Assert.assertEquals(12, date2.getMonthOfYear());
         Assert.assertEquals(8, date2.getDayOfMonth());
@@ -84,7 +85,7 @@ public class ExtendedAnnotatedFormatterTest {
         final JodaDateTimeFormat annotation = AnnotationTest.class.getField("single").getAnnotation(JodaDateTimeFormat.class);
 
         final DateTime date = new DateTime(2015, 3, 5, 0, 0);
-        final String output = formatter.print(annotation, date, Locale.FRANCE);
+        final String output = ExtendedAnnotatedFormatterTest.formatter.print(annotation, date, Locale.FRANCE);
 
         Assert.assertEquals("2015-03-05", output);
     }
@@ -100,7 +101,7 @@ public class ExtendedAnnotatedFormatterTest {
     public void T03_MultiplePatternParse() throws ParseException, NoSuchFieldException {
         final JodaDateTimeFormat annotation = AnnotationTest.class.getField("multiple").getAnnotation(JodaDateTimeFormat.class);
 
-        final DateTime date = formatter.parse(annotation, "2015-03-05T12:15:35", Locale.FRANCE);
+        final DateTime date = ExtendedAnnotatedFormatterTest.formatter.parse(annotation, "2015-03-05T12:15:35", Locale.FRANCE);
         Assert.assertEquals(2015, date.getYear());
         Assert.assertEquals(3, date.getMonthOfYear());
         Assert.assertEquals(5, date.getDayOfMonth());
@@ -109,7 +110,7 @@ public class ExtendedAnnotatedFormatterTest {
         Assert.assertEquals(35, date.getSecondOfMinute());
         Assert.assertEquals(0, date.getMillisOfSecond());
 
-        final DateTime date2 = formatter.parse(annotation, "2015-03-05T12:15:35.666S", Locale.FRANCE);
+        final DateTime date2 = ExtendedAnnotatedFormatterTest.formatter.parse(annotation, "2015-03-05T12:15:35.666S", Locale.FRANCE);
         Assert.assertEquals(2015, date2.getYear());
         Assert.assertEquals(3, date2.getMonthOfYear());
         Assert.assertEquals(5, date2.getDayOfMonth());
@@ -131,7 +132,7 @@ public class ExtendedAnnotatedFormatterTest {
         final JodaDateTimeFormat annotation = AnnotationTest.class.getField("multiple").getAnnotation(JodaDateTimeFormat.class);
 
         final DateTime date = new DateTime(2015, 3, 5, 12, 15, 35, 666);
-        final String output = formatter.print(annotation, date, Locale.FRANCE);
+        final String output = ExtendedAnnotatedFormatterTest.formatter.print(annotation, date, Locale.FRANCE);
 
         Assert.assertEquals("2015-03-05T12:15:35", output);
     }
@@ -148,7 +149,7 @@ public class ExtendedAnnotatedFormatterTest {
         final JodaDateTimeFormat annotation = AnnotationTest.class.getField("multipleAdvanced").getAnnotation(JodaDateTimeFormat.class);
 
         final DateTime date = new DateTime(2015, 3, 5, 12, 15, 35, 666);
-        final String output = formatter.print(annotation, date, Locale.FRANCE);
+        final String output = ExtendedAnnotatedFormatterTest.formatter.print(annotation, date, Locale.FRANCE);
 
         Assert.assertEquals("The 2015-03-05 at 12:15:35 and 666 ms", output);
     }
@@ -164,7 +165,7 @@ public class ExtendedAnnotatedFormatterTest {
     public void T06_InputDateError() throws ParseException, NoSuchFieldException {
         final JodaDateTimeFormat annotation = AnnotationTest.class.getField("single").getAnnotation(JodaDateTimeFormat.class);
 
-        formatter.parse(annotation, "2015-03-44", Locale.FRANCE);
+        ExtendedAnnotatedFormatterTest.formatter.parse(annotation, "2015-03-44", Locale.FRANCE);
     }
 
     /**
@@ -178,7 +179,7 @@ public class ExtendedAnnotatedFormatterTest {
     public void T07_InputDateError() throws ParseException, NoSuchFieldException {
         final JodaDateTimeFormat annotation = AnnotationTest.class.getField("single").getAnnotation(JodaDateTimeFormat.class);
 
-        formatter.parse(annotation, "qwerty", Locale.FRANCE);
+        ExtendedAnnotatedFormatterTest.formatter.parse(annotation, "qwerty", Locale.FRANCE);
     }
 
     /**

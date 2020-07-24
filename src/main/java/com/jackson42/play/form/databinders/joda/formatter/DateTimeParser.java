@@ -25,6 +25,7 @@
 package com.jackson42.play.form.databinders.joda.formatter;
 
 import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
@@ -49,7 +50,7 @@ public interface DateTimeParser {
      * @return the date time
      * @throws ParseException the parse exception
      */
-    default DateTime parse(final String[] patterns, final String text, final Locale locale) throws ParseException {
+    default DateTime parse(final String[] patterns, final String text, final Locale locale, final DateTimeZone tz) throws ParseException {
         if (text == null || text.trim().isEmpty() || text.compareToIgnoreCase("null") == 0) {
             return null;
         }
@@ -57,7 +58,7 @@ public interface DateTimeParser {
         for (final String pattern : patterns) {
             try {
                 final DateTimeFormatter dateTimeFormatter = DateTimeFormat.forPattern(pattern);
-                return dateTimeFormatter.withLocale(locale).withZoneUTC().parseDateTime(text);
+                return dateTimeFormatter.withLocale(locale).withZoneUTC().parseDateTime(text).withZoneRetainFields(tz);
             } catch (final IllegalArgumentException ignore) {
             }
         }
@@ -78,13 +79,13 @@ public interface DateTimeParser {
      * @return the date time
      * @throws ParseException the parse exception
      */
-    default DateTime parse(final String pattern, final String text, final Locale locale) throws ParseException {
+    default DateTime parse(final String pattern, final String text, final Locale locale, final DateTimeZone tz) throws ParseException {
         if (text == null || text.trim().isEmpty() || text.compareToIgnoreCase("null") == 0) {
             return null;
         }
         try {
             final DateTimeFormatter dateTimeFormatter = DateTimeFormat.forPattern(pattern);
-            return dateTimeFormatter.withLocale(locale).withZoneUTC().parseDateTime(text);
+            return dateTimeFormatter.withLocale(locale).withZoneUTC().parseDateTime(text).withZoneRetainFields(tz);
         } catch (final IllegalArgumentException ignore) {
         }
 
@@ -99,11 +100,11 @@ public interface DateTimeParser {
      * @param locale       the locale
      * @return the datetime representation
      */
-    default String print(final String printPattern, final DateTime value, final Locale locale) {
+    default String print(final String printPattern, final DateTime value, final Locale locale, final DateTimeZone tz) {
         if (value == null) {
             return "";
         }
-        return value.toString(printPattern, locale);
+        return (tz != null ? value.withZone(tz) : value).toString(printPattern, locale);
     }
 
     /**
@@ -114,11 +115,11 @@ public interface DateTimeParser {
      * @param locale       the locale
      * @return the datetime representation
      */
-    default String print(final String printPattern, final String[] parsePatterns, final DateTime value, final Locale locale) {
+    default String print(final String printPattern, final String[] parsePatterns, final DateTime value, final Locale locale, final DateTimeZone tz) {
         String pattern = printPattern;
         if ((pattern == null || pattern.equals("")) && parsePatterns.length > 0) {
             pattern = parsePatterns[0];
         }
-        return this.print(pattern, value, locale);
+        return this.print(pattern, value, locale, tz);
     }
 }
