@@ -21,7 +21,7 @@ In your ```build.sbt``` file, you need to add a resolver to jitpack and the depe
 ```sbtshell
 resolvers += "jitpack" at "https://jitpack.io"
 
-libraryDependencies += "com.github.PierreAdam" % "PlayForm-JodaDataBinder" % "release~20.08"
+libraryDependencies += "com.github.PierreAdam" % "PlayForm-JodaDataBinder" % "release~20.09"
 ```
 
 ### Configuration
